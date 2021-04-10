@@ -1,4 +1,6 @@
 import express, { Request, Response } from 'express';
+import { validation } from '../middleware/validation.middleware';
+import { BookSchema } from './book.schema';
 
 import * as BookService from './books.service';
 import { BaseBook, Book } from './book.interface';
@@ -29,3 +31,19 @@ booksRouter.get('/:id', async (req: Request, res: Response) => {
     res.status(500).send(e.message);
   }
 });
+
+booksRouter.post(
+  '/',
+  validation(BookSchema),
+  async (req: Request, res: Response) => {
+    try {
+      const book: BaseBook = req.body;
+
+      const newBook = await BookService.create(book);
+
+      res.status(201).json(newBook);
+    } catch (e) {
+      res.status(500).send(e.message);
+    }
+  }
+);

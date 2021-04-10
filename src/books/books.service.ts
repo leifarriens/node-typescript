@@ -8,14 +8,14 @@ const books: Books = {
     name: 'LOTR',
     price: 50,
     description: 'Good',
-    author: 'Tolkien',
+    authors: ['Tolkien'],
   },
   2: {
     id: 2,
     name: 'Harry Potter',
     price: 20,
     description: 'Boy with magic wand',
-    author: 'JK',
+    authors: ['JK'],
   },
 };
 
@@ -24,3 +24,14 @@ const books: Books = {
 export const findAll = async (): Promise<Book[]> => Object.values(books);
 
 export const find = async (id: number): Promise<Book> => books[id];
+
+export const create = async (newBook: BaseBook): Promise<Book> => {
+  const id = new Date().valueOf();
+
+  books[id] = {
+    id,
+    ...newBook,
+  };
+
+  return books[id];
+};

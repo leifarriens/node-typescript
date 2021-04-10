@@ -2,7 +2,7 @@ export interface BaseBook {
   name: string;
   price: number;
   description: string;
-  author: string;
+  authors: string[];
 }
 
 export interface Book extends BaseBook {
